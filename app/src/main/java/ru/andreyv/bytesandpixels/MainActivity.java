@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity implements PictureCapturingL
             Manifest.permission.CAMERA,
     };
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_CODE = 1;
+
+    //The capture service
+    private APictureCapturingService pictureService;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +46,12 @@ public class MainActivity extends AppCompatActivity implements PictureCapturingL
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {showToast("Starting capture!");
+
+        pictureService = PictureCapturingServiceImpl.getInstance(this);
+
+        fab.setOnClickListener(view -> {showToast("Starting capture!");
 // step 2
-                pictureService.startCapturing(this);
-            }
+            pictureService.startCapturing(this);
         });
     }
 
